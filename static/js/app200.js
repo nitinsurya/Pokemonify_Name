@@ -19,15 +19,19 @@ $(document).ready(function() {
         .done(function(data) {
           $(".suggestions").removeClass('hidden')
           $(".suggestions .results").html('');
-          count = 0;
-          $.each(data, function(index, value) {
-            count += 1
-            $(".suggestions .results").append("<div>" + value['updated_name']
-              + " ( Pokemon: <a href=\"" + value['url'] + "\" target='_blank'>" + value['pokemon_name'] + "</a> ) </div>");
-          })
-          if(count == 0) {
-            $(".suggestions .results").append("<div>No suggestions</div>");
-          }
+          $.each(data, function(key, value_ar) {
+            count = 0;
+            $(".suggestions .results").append("<h5>" + key + "</h5>");
+            $.each(value_ar, function(index, value) {
+              count += 1
+              $(".suggestions .results").append("<div>" + value['updated_name']
+                + " ( Pokemon: <a href=\"" + value['url'] + "\" target='_blank'>"
+                + value['pokemon_name'] + "</a> ) </div>");
+            });
+            if(count == 0) {
+              $(".suggestions .results").append("<div>No suggestions</div>");
+            }
+          });
           $("#p2").addClass("hidden");
           $(".suggestions .results").removeClass("hidden")
         })

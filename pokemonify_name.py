@@ -55,11 +55,18 @@ def getDiff(s1, s2):
   return jellyfish.jaro_winkler(s2, s1)
   # return fuzz.ratio(s1, s2)/100
 
-# This function takes username as input and return an array of results
-#   with pokemonified names
 def getInputAndSuggest(uname, print_output = True):
   pokemons_names_list, pokemon_url_mapping = get_pokemons_names()
-  uname = uname.lower()
+  uname = uname.lower().split()
+  output = {}
+  for name_part in uname:
+    output[name_part.capitalize()] = getInputAndSuggestPerWord(name_part, pokemons_names_list, pokemon_url_mapping, print_output)
+  return output
+
+# This function takes username as input and return an array of results
+#   with pokemonified names
+def getInputAndSuggestPerWord(uname, pokemons_names_list, pokemon_url_mapping, print_output = True):
+  pokemons_names_list, pokemon_url_mapping = get_pokemons_names()
   best_rep = {}
   for pokemon_name in pokemons_names_list:
     # if not pokemon_name.startswith("cascoon"):
@@ -69,7 +76,10 @@ def getInputAndSuggest(uname, print_output = True):
     # Finding the pokemon names matching the user name
 
     # getting substrings of pokemon name
-    psubs = get_all_substrings(pokemon_name, 2, len(uname) + 2)
+    if len(uname) > 5:
+      psubs = get_all_substrings(pokemon_name, 3 + int(len(uname)/8), len(uname) + 2)
+    else:
+      psubs = get_all_substrings(pokemon_name, 2, len(uname) + 2)
     similar_subs = []
     best_sub_rep = {}
     for psub in psubs:
