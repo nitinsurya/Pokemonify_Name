@@ -33,7 +33,7 @@ $(document).ready(function() {
         })
     } else {
       $(".error").removeClass("hidden");
-      $(".suggestions .results").addClass("hidden");
+      //$(".suggestions .results").addClass("hidden");
     }
   });
 });
