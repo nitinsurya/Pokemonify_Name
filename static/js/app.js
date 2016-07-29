@@ -29,7 +29,7 @@ $(document).ready(function() {
             $(".suggestions .results").append("<div>No suggestions</div>");
           }
           $("#p2").addClass("hidden");
-          //$(".suggestions .results").removeClass("hidden")
+          $(".suggestions .results").removeClass("hidden")
         })
     } else {
       $(".error").removeClass("hidden");
