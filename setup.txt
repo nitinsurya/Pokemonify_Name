@@ -1,0 +1,7 @@
+virtualenv flask
+flask/bin/pip install flask
+flask/bin/pip install jellyfish
+flask/bin/pip install beautifulsoup4
+
+chmod a+x api.py
+./api.py
