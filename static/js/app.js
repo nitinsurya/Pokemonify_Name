@@ -22,8 +22,8 @@ $(document).ready(function() {
           count = 0;
           $.each(data, function(index, value) {
             count += 1
-            $(".suggestions .results").append("<div>" + capitalizeFirstLetter(value['updated_name'])
-              + " ( Pokemon: " + capitalizeFirstLetter(value['pokemon_name']) + " ) </div>");
+            $(".suggestions .results").append("<div>" + value['updated_name']
+              + " ( Pokemon: <a href=\"" + value['url'] + "\" target='_blank'>" + value['pokemon_name'] + "</a> ) </div>");
           })
           if(count == 0) {
             $(".suggestions .results").append("<div>No suggestions</div>");
@@ -37,7 +37,3 @@ $(document).ready(function() {
     }
   });
 });
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}

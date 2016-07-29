@@ -7,36 +7,40 @@ from operator import itemgetter, attrgetter, methodcaller
 
 def get_pokemons_names():
   pokemons_names_list = []
+  pokemon_url_mapping = {}
   dir_path = os.path.dirname(os.path.realpath(__file__))
   if os.path.isfile(dir_path + "/" + 'pokemons.db'):
     conn = sqlite3.connect('pokemons.db')
     c = conn.cursor()
 
-    for row in c.execute('''select name from pokemons'''):
+    for row in c.execute('''select name, purl from pokemons'''):
       pokemons_names_list.append(row[0])
+      pokemon_url_mapping[row[0]] = row[1]
   else:
     conn = sqlite3.connect('pokemons.db')
     c = conn.cursor()
 
-    c.execute('''CREATE TABLE pokemons (pid text, name text, CONSTRAINT id_unique UNIQUE (pid))''')
+    c.execute('''CREATE TABLE pokemons (pid text, name text, purl text, CONSTRAINT id_unique UNIQUE (pid))''')
 
     page = open("pokemonify_name.html").read()
     parsed_html = BeautifulSoup(page, 'html.parser')
-    pokemons_list = []
 
     for tr_one in parsed_html.tbody.find_all("tr"):
-      pid = tr_one.find_all("td")[0].get_text().strip()
-      pname = tr_one.find_all("td")[1].get_text().lower().strip().splitlines()[0].replace("\'", "\\'")
+      all_tds = tr_one.find_all("td")
+      pid = all_tds[0].get_text().strip()
+      pname = all_tds[1].get_text().lower().strip().splitlines()[0].replace("\'", "\\'")
+      phref = "http://pokemondb.net" + all_tds[1].a['href']
       try:
-        c.execute("INSERT INTO pokemons VALUES (\"" + pid + "\", \"" + pname + "\")")
+        c.execute("INSERT INTO pokemons VALUES (\"" + pid + "\", \"" + pname + "\", \"" + phref + "\")")
       except:
         continue
       pokemons_names_list.append(pname)
+      pokemon_url_mapping[pname] = phref
 
     conn.commit()
     conn.close()
 
-  return pokemons_names_list
+  return pokemons_names_list, pokemon_url_mapping
 
 def get_all_substrings(input_string, minv, maxv, beginning=False):
   length = 1 if beginning else len(input_string)
@@ -54,7 +58,7 @@ def getDiff(s1, s2):
 # This function takes username as input and return an array of results
 #   with pokemonified names
 def getInputAndSuggest(uname, print_output = True):
-  pokemons_names_list = get_pokemons_names()
+  pokemons_names_list, pokemon_url_mapping = get_pokemons_names()
   uname = uname.lower()
   best_rep = {}
   for pokemon_name in pokemons_names_list:
@@ -101,8 +105,9 @@ def getInputAndSuggest(uname, print_output = True):
       #   to take the longest string, and only one username for each pokemon
       if pokemonified_name != rep[1]:
         if (rep[1] not in output_res) or (len(pokemonified_name) > len(output_res[rep[1]]['updated_name'])):
-          output_res[rep[1]] = {'updated_name': pokemonified_name,
-            'pokemon_name': rep[1], 'similarity': rep[3]}
+          output_res[rep[1]] = {'updated_name': pokemonified_name.capitalize(),
+            'url': pokemon_url_mapping[rep[1]],
+            'pokemon_name': rep[1].capitalize(), 'similarity': rep[3]}
     if len(list(output_res.keys())) > 5: # break if we have more than 5 results
       break
 
@@ -120,5 +125,5 @@ def getInputAndSuggest(uname, print_output = True):
   return output_res
 
 # while(1):
-#   uname = input("Enter username : ")
-#   getInputAndSuggest()
+# uname = input("Enter username : ")
+# getInputAndSuggest(uname)
