@@ -16,8 +16,11 @@
     </button>
     <!-- <input type="button" id="get_names" value="Submit"> -->
   </div>
+  <div class="error hidden">Name should be atleast 3 characters long</div>
   <div class="suggestions hidden mdl-card mdl-shadow--2dp" style="text-align: center; margin-top: 20px; margin: auto; padding: 0 25px 20px 25px; width: 40%">
     <h3 class="">Suggestions</h3>
+  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"
+  style="margin: auto"></div>
     <div class="results mdl-card--border">
     </div>
   </div>
@@ -37,6 +40,10 @@
   <style>
     .hidden {
       display: none;
+    }
+    .error {
+      color: #CB202D;
+      text-align: center;
     }
   </style>
 </body>

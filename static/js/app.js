@@ -1,8 +1,10 @@
 $(document).ready(function() {
-
   $("#get_names").on('click', function() {
     uname = $.trim($("#uname").val())
-    if(uname.length > 3) {
+    if(uname.length > 2) {
+      $("#p2").removeClass("hidden");
+      $(".suggestions .results").addClass("hidden");
+      $(".error").addClass("hidden");
       $.get('/get_names', {uname: uname})
         .done(function(data) {
           $(".suggestions").removeClass('hidden')
@@ -16,7 +18,11 @@ $(document).ready(function() {
           if(count == 0) {
             $(".suggestions .results").append("<div>No suggestions</div>");
           }
+          $("#p2").addClass("hidden");
+          $(".suggestions .results").removeClass("hidden")
         })
+    } else {
+      $(".error").removeClass("hidden");
     }
   });
 });
