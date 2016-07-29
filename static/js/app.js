@@ -11,7 +11,7 @@ $(document).ready(function() {
           $.each(data, function(index, value) {
             count += 1
             $(".suggestions .results").append("<div>" + capitalizeFirstLetter(value['updated_name'])
-              + " ( " + capitalizeFirstLetter(value['pokemon_name']) + " ) </div>");
+              + " ( Pokemon: " + capitalizeFirstLetter(value['pokemon_name']) + " ) </div>");
           })
           if(count == 0) {
             $(".suggestions .results").append("<div>No suggestions</div>");
