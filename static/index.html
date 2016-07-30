@@ -3,10 +3,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
 
   <title>Pokimonify My name</title>
+  <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
   <div style="text-align: center; margin-top: 40px">
-    <h2>Pokemonify your name</h2>
+    <h2 class="md-display-2">Pokemonify your name</h2>
     <div class="mdl-textfield mdl-js-textfield">
       <input class="mdl-textfield__input" id="uname" type="text" id="sample1">
       <label class="mdl-textfield__label" for="sample1">Enter your name ...</label>
@@ -17,33 +26,28 @@
     <!-- <input type="button" id="get_names" value="Submit"> -->
   </div>
   <div class="error hidden">Name should be atleast 3 characters long</div>
-  <div class="suggestions hidden mdl-card mdl-shadow--2dp" style="text-align: center; margin-top: 20px; margin: auto; padding: 0 25px 20px 25px; width: 40%">
+  <div class="suggestions hidden mdl-card mdl-shadow--2dp" style="text-align: center; margin-top: 20px; margin: auto; padding: 0 25px 20px 25px;">
     <h3 class="">Suggestions</h3>
-  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"
-  style="margin: auto"></div>
+    <div id="p2" class="hidden mdl-progress mdl-js-progress mdl-progress__indeterminate"
+    style="margin: auto; width: 80%;"></div>
     <div class="results mdl-card--border">
     </div>
   </div>
-  <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
-
-  <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-</head>
-
-<body>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
   <script src="js/app200.js"></script>
-  <style>
+  <style type="text/css">
     .hidden {
       display: none;
     }
     .error {
       color: #CB202D;
       text-align: center;
+    }
+    .suggestions {
+      min-width: 40%;
     }
   </style>
 </body>
